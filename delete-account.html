@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Excluir Conta — Lumi</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F0EEFF; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .card { background: white; border-radius: 20px; padding: 40px; max-width: 480px; width: 100%; box-shadow: 0 4px 24px rgba(99,102,241,0.12); }
+    .logo { width: 64px; height: 64px; background: linear-gradient(135deg, #6366F1, #8B5CF6); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+    .logo span { font-size: 32px; }
+    h1 { font-size: 24px; font-weight: 700; color: #1E1B4B; margin-bottom: 8px; }
+    .subtitle { color: #6B7280; font-size: 15px; margin-bottom: 32px; line-height: 1.5; }
+    label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+    input { width: 100%; padding: 12px 16px; border: 1.5px solid #E5E7EB; border-radius: 10px; font-size: 15px; outline: none; transition: border-color .2s; margin-bottom: 16px; }
+    input:focus { border-color: #6366F1; }
+    textarea { width: 100%; padding: 12px 16px; border: 1.5px solid #E5E7EB; border-radius: 10px; font-size: 15px; outline: none; resize: vertical; min-height: 100px; transition: border-color .2s; margin-bottom: 24px; font-family: inherit; }
+    textarea:focus { border-color: #6366F1; }
+    button { width: 100%; padding: 14px; background: #EF4444; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background .2s; }
+    button:hover { background: #DC2626; }
+    .info { background: #FEF2F2; border: 1px solid #FECACA; border-radius: 10px; padding: 16px; margin-bottom: 24px; }
+    .info p { font-size: 14px; color: #991B1B; line-height: 1.5; }
+    .success { display: none; text-align: center; padding: 24px 0; }
+    .success .check { font-size: 48px; margin-bottom: 16px; }
+    .success h2 { color: #1E1B4B; margin-bottom: 8px; }
+    .success p { color: #6B7280; font-size: 14px; }
+    .alt { text-align: center; margin-top: 20px; font-size: 13px; color: #9CA3AF; }
+    .alt a { color: #6366F1; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo"><span>☀️</span></div>
+    <h1>Excluir minha conta</h1>
+    <p class="subtitle">Preencha o formulário abaixo para solicitar a exclusão da sua conta e de todos os dados associados ao Lumi.</p>
+
+    <div class="info">
+      <p>⚠️ Esta ação é <strong>permanente e irreversível</strong>. Todos os seus dados serão excluídos, incluindo histórico de orações, conversas com a IA e bookmarks.</p>
+    </div>
+
+    <form id="form">
+      <label for="email">E-mail da sua conta</label>
+      <input type="email" id="email" placeholder="seu@email.com" required />
+
+      <label for="reason">Motivo (opcional)</label>
+      <textarea id="reason" placeholder="Conte-nos por que está saindo..."></textarea>
+
+      <button type="submit">Solicitar exclusão da conta</button>
+    </form>
+
+    <div class="success" id="success">
+      <div class="check">✅</div>
+      <h2>Solicitação recebida</h2>
+      <p>Processaremos a exclusão da sua conta em até <strong>7 dias úteis</strong>.<br/>Você receberá uma confirmação por e-mail.</p>
+    </div>
+
+    <p class="alt">Também é possível excluir diretamente pelo app em<br/><strong>Configurações → Excluir minha conta</strong></p>
+    <p class="alt" style="margin-top:8px">Dúvidas? <a href="mailto:suporte@lumi.app">suporte@lumi.app</a></p>
+  </div>
+
+  <script>
+    document.getElementById('form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const reason = document.getElementById('reason').value;
+
+      // Send deletion request via mailto as fallback
+      const subject = encodeURIComponent('Solicitação de exclusão de conta - Lumi');
+      const body = encodeURIComponent(`Email: ${email}\nMotivo: ${reason || 'Não informado'}`);
+      window.location.href = `mailto:suporte@lumi.app?subject=${subject}&body=${body}`;
+
+      document.getElementById('form').style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
